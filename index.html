@@ -10,7 +10,14 @@
   <section id="target-chooser">
     <div class="wrapper">
       <label for="target-root-url">test target root</label>
-      <input id="target-root-url" placeholder="e.g. http://todo-backend-sinatra.herokuapp.com/todos"></input>
+      <input type="text" id="target-root-url" placeholder="e.g. http://todo-backend-sinatra.herokuapp.com/todos" />
+
+      <h3>Optional features</h3>
+
+      <label>
+        <input type="checkbox" id="include-authentication" /> Authentication
+      </label>
+
       <a class="link-to-source" href="https://github.com/moredip/todo-backend">view source</a>
     </div>
     <button>run tests</button>
