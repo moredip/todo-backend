@@ -71,6 +71,10 @@ function createAPI(apiRoot){
   }
 
   function ajax(httpMethod, url, options){
+    if ( window.token ){
+      url += '?token=' + window.token;
+    }
+
     var ajaxOptions = _.defaults( (options||{}), {
       type: httpMethod,
       url: url,
