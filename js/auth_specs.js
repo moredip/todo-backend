@@ -15,34 +15,69 @@ function defineAuthSpecsFor(apiRoot){
       return url.match(/^https?:\/\/[^\/]+/)[0];
     }
 
-    it( 'supports user registration via /register', function(){
-      var name = randomString(10),
-          password = randomString(10);
+    function getAbsUrl(route) {
+      return getHost(apiRoot) + route;
+    }
 
-      var postRegister = api.postJson(getHost(apiRoot) + '/register', {
+    var name = randomString(10),
+        password = randomString(10);
+
+    it( 'supports user registration via /register', function(){
+      var postRegister = api.postJson(getAbsUrl('/register'), {
         name: name,
         password: password,
         passwordConfirmation: password
       });
 
-      window.user.name = name;
-      window.user.password = password;
-
-      return expect(postRegister).to.eventually.have.property('name');
+      return expect(postRegister).to.be.fulfilled;
     });
 
-    it( 'provides an authentication token in exchange for name & password', function(){
-      var postAuth = api.postJson(getHost(apiRoot) + '/login', {
-        name: user.name,
-        password: user.password
+    describe( 'logging in', function(){
+      function expectErrorWithHttpStatus(status, route, data) {
+        var request = api.postJson(getAbsUrl(route), data),
+            statusPattern = new RegExp(String(status));
+        return expect(request).to.be.rejectedWith(Error, statusPattern);
+      }
+
+      it( 'responds with a 401 if the password is incorrect', function(){
+        return expectErrorWithHttpStatus(401, '/login', {
+          name: name,
+          password: 'blah'
+        });
       });
 
-      postAuth = postAuth.then(function(data) {
-        window.token = data.token;
-        return data;
+      it( 'responds with a 401 if the user does not exist', function(){
+        return expectErrorWithHttpStatus(401, '/login', {
+          name: randomString(10),
+          password: password
+        });
       });
 
-      return expect(postAuth).to.eventually.have.property('token');
+      it( 'responds with a 401 if the "name" field is missing', function(){
+        return expectErrorWithHttpStatus(401, '/login', {
+          password: password
+        });
+      });
+
+      it( 'responds with a 401 if the "password" field is missing', function(){
+        return expectErrorWithHttpStatus(401, '/login', {
+          name: name
+        });
+      });
+
+      it( 'provides an authentication token in exchange for name & password', function(){
+        var goodLogin = api.postJson(getHost(apiRoot) + '/login', {
+          name: name,
+          password: password
+        });
+
+        goodLogin = goodLogin.then(function(data) {
+          window.token = data.token;
+          return data;
+        });
+
+        return expect(goodLogin).to.eventually.have.property('token');
+      });
     });
   });
 

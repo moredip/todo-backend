@@ -3,8 +3,7 @@ mocha.slow("5s");
 mocha.timeout("30s"); //so that tests don't fail with a false positive while waiting for e.g a heroku dyno to spin up
 window.expect = chai.expect;
 
-// globals for auth
-window.user = {};
+// global for auth
 window.token = null;
 
 
