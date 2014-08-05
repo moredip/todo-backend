@@ -36,22 +36,24 @@ function parseQueryString(){
   }, {});
 }
 
-var params = parseQueryString(),
-    targetRootUrl = params.targetRootUrl,
-    includeAuth = params.auth;
+function initWithParams(params) {
+  var targetRootUrl = params.targetRootUrl;
 
-if( targetRootUrl ){
-  $("#target-info .target-url").text(targetRootUrl);
-  $("#target-chooser").hide();
+  if( targetRootUrl ){
+    $("#target-info .target-url").text(targetRootUrl);
+    $("#target-chooser").hide();
 
-  if (includeAuth) {
-    defineAuthSpecsFor(targetRootUrl);
+    if( params.auth ){
+      defineAuthSpecsFor(targetRootUrl);
+    }
+
+    defineSpecsFor(targetRootUrl);
+
+    mocha.checkLeaks();
+    var runner = mocha.run();
+  }else{
+    $("#target-info").hide();
   }
-
-  defineSpecsFor(targetRootUrl);
-
-  mocha.checkLeaks();
-  var runner = mocha.run();
-}else{
-  $("#target-info").hide();
 }
+
+initWithParams(parseQueryString());
