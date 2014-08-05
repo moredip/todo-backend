@@ -37,17 +37,18 @@ function parseQueryString(){
 }
 
 function initWithParams(params) {
-  var targetRootUrl = params.targetRootUrl;
+  var targetRootUrl = params.targetRootUrl,
+      api = createAPI(targetRootUrl);
 
   if( targetRootUrl ){
     $("#target-info .target-url").text(targetRootUrl);
     $("#target-chooser").hide();
 
     if( params.auth ){
-      defineAuthSpecsFor(targetRootUrl);
+      defineAuthSpecsFor(api);
     }
 
-    defineSpecsFor(targetRootUrl);
+    defineSpecsFor(api);
 
     mocha.checkLeaks();
     var runner = mocha.run();

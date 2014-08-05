@@ -1,6 +1,6 @@
-function defineSpecsFor(apiRoot){
+function defineSpecsFor(api){
 
-  var api = createAPI(apiRoot),
+  var apiRoot = api.root(),
       get = api.get,
       getRaw = api.getRaw,
       post = api.post,

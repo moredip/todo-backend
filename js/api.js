@@ -1,5 +1,9 @@
 function createAPI(apiRoot){
 
+  function root() {
+    return apiRoot;
+  }
+
   function get(url, options){
     return getRaw(url,options).then( transformResponseToJson );
   }
@@ -96,6 +100,7 @@ function createAPI(apiRoot){
   }
 
   return {
+    root: root,
     get: get,
     getRaw: getRaw,
     post: post,

@@ -1,6 +1,4 @@
-function defineAuthSpecsFor(apiRoot){
-
-  var api = createAPI(apiRoot);
+function defineAuthSpecsFor(api){
 
   describe( 'Todo-Backend API - authentication', function(){
     function randomString(len){
@@ -16,7 +14,7 @@ function defineAuthSpecsFor(apiRoot){
     }
 
     function getAbsUrl(route) {
-      return getHost(apiRoot) + route;
+      return getHost(api.root()) + route;
     }
 
     var name = randomString(10),
@@ -66,7 +64,7 @@ function defineAuthSpecsFor(apiRoot){
       });
 
       it( 'provides an authentication token in exchange for name & password', function(){
-        var goodLogin = api.postJson(getHost(apiRoot) + '/login', {
+        var goodLogin = api.postJson(getAbsUrl('/login'), {
           name: name,
           password: password
         });
