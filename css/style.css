@@ -11,7 +11,7 @@
   position: relative;
 }
 
-#target-chooser label {
+#target-chooser label:first-of-type {
   font-style: italic;
   position: absolute;
   top: -25px;
@@ -20,13 +20,25 @@
   background: white;
 }
 
-#target-chooser input {
+#target-chooser h3 {
+  font-size: 16pt;
+  margin-bottom: 0;
+}
+
+#target-chooser label:nth-of-type(1n+2) {
+  font-size: 12pt;
+}
+
+#target-chooser input[type="text"] {
   font: inherit;
   width: 100%;
   padding: 0 0.2em;
 }
 
 #target-chooser .link-to-source {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
   font-size: small;
   color: rgb(48, 173, 48);
   text-decoration: none;
