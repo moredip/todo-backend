@@ -70,7 +70,7 @@ function defineAuthSpecsFor(api){
         });
 
         goodLogin = goodLogin.then(function(data) {
-          window.token = data.token;
+          api.token = data.token;
           return data;
         });
 

@@ -3,9 +3,6 @@ mocha.slow("5s");
 mocha.timeout("30s"); //so that tests don't fail with a false positive while waiting for e.g a heroku dyno to spin up
 window.expect = chai.expect;
 
-// global for auth
-window.token = null;
-
 
 function loadTargetRootFromInput(){
   var targetRoot = $('#target-root-url').val();

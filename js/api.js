@@ -75,8 +75,8 @@ function createAPI(apiRoot){
   }
 
   function ajax(httpMethod, url, options){
-    if ( window.token ){
-      url += '?token=' + window.token;
+    if ( api.token ){
+      url += '?token=' + api.token;
     }
 
     var ajaxOptions = _.defaults( (options||{}), {
@@ -99,7 +99,7 @@ function createAPI(apiRoot){
     });
   }
 
-  return {
+  var api = {
     root: root,
     get: get,
     getRaw: getRaw,
@@ -111,5 +111,7 @@ function createAPI(apiRoot){
     postRoot: postRoot,
     getRoot: getRoot
   };
+
+  return api;
 
 }
